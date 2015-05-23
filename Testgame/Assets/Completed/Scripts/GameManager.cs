@@ -16,6 +16,9 @@ namespace Completed
 		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
         public int size;
         public List<GameObject> backpack = new List<GameObject>();
+		public int stamina;
+		public int hammer = 10;
+		public int hoe = 10;
 		
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.

@@ -54,6 +54,7 @@ namespace Completed
 				//Within each column, loop through y axis (rows).
 				for(int y = 0; y < rows; y++)
 				{
+
 					//At each index add a new Vector3 to our list with the x and y coordinates of that position.
 					gridPositions.Add (new Vector3(x, y, 0f));
 				}

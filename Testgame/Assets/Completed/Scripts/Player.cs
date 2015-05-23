@@ -10,6 +10,7 @@ namespace Completed
 	{
 
         public LayerMask blockingLayer;
+		public Transform msg_fbp;
         public Transform hammer;
         public Transform hoe;
         public GameObject hitbox;
@@ -19,6 +20,9 @@ namespace Completed
 		public int pointsPerSoda = 20;				//Number of points to add to player Stamina points when picking up a soda object.
 		public int wallDamage = 1;					//How much damage a player does to a wall when chopping it.
 		public Text StaminaText;						//UI Text to display current player Stamina total.
+		public Text BackpackText;
+		public Text HammerText;
+		public Text HoeText;
 		public AudioClip moveSound1;				//1 of 2 Audio clips to play when player moves.
 		public AudioClip moveSound2;				//2 of 2 Audio clips to play when player moves.
 		public AudioClip eatSound1;					//1 of 2 Audio clips to play when player collects a Stamina object.
@@ -28,7 +32,7 @@ namespace Completed
 		public AudioClip gameOverSound;				//Audio clip to play when player dies.
         int up = 0;  	//Used to store the horizontal move direction.
         int down = 0;		//Used to store the vertical move direction.
-        bool movable = true;
+        //bool movable = true;
         bool go = true;
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;							//Used to store player Stamina points total during level.
@@ -41,6 +45,9 @@ namespace Completed
         private float inverseMoveTime;			//Used to make movement more efficient.
         private int size;
         private List<GameObject> backpack;
+		private int stamina_pts;
+		private int hammer_pts;
+		private int hoe_pts;
 		
 		//Start overrides the Start function of MovingObject
 		 void Start ()
@@ -55,9 +62,16 @@ namespace Completed
             Health = GameManager.instance.PlayerHealth;
             size = GameManager.instance.size;
             backpack = GameManager.instance.backpack;
+			stamina_pts = GameManager.instance.stamina;
+			hammer_pts = GameManager.instance.hammer;
+			hoe_pts = GameManager.instance.hoe;
+
 			//Set the StaminaText to reflect the current player Stamina total.
-			StaminaText.text = "Stamina: " + Stamina;
-			
+			StaminaText.text = ": " + Stamina;
+			BackpackText.text = ": " + backpack.Count + "/" + size; 
+			HammerText.text = ": " + hammer_pts;
+			HoeText.text = ": " + hoe_pts;
+
 			//Call the Start function of the MovingObject base class.
             //Get a component reference to this object's BoxCollider2D
             boxCollider = GetComponent<BoxCollider2D>();
@@ -75,6 +89,10 @@ namespace Completed
 		{
 			//When Player object is disabled, store the current local Stamina total in the GameManager so it can be re-loaded in next level.
 			GameManager.instance.playerStaminaPoints = Stamina;
+			GameManager.instance.hammer = hammer_pts;
+			GameManager.instance.hoe = hoe_pts;
+			GameManager.instance.backpack = backpack;
+
 		}
 		
 		
@@ -94,10 +112,9 @@ namespace Completed
             {
                 if (Input.GetButtonDown("yes"))
                 {
+
                     Put_in();
-                    backpack.Add(item.gameObject);
-                    //Function to put object in bag
-                    Destroy(item.gameObject);
+                    
                     hold = false;
                 }
                 else if (Input.GetButtonDown("no"))
@@ -111,17 +128,11 @@ namespace Completed
             }
             else if (Input.GetButtonDown("Hammer") && !hold)
             {
-                    //Debug.Log(hold);
-                    Debug.Log("Hammer");
-                    Instantiate(hammer, new Vector3(hitbox.transform.position.x + up, hitbox.transform.position.y + down, 0), Quaternion.identity);
-                    animator.SetBool("Hammer", true);
-               
+				Hammer();
             }
             else if (Input.GetButtonDown("Hoe")&& hold == false)
             {
-                Debug.Log("Hoe");
-                Instantiate(hoe, new Vector3(hitbox.transform.position.x + up, hitbox.transform.position.y + down, 0), Quaternion.identity);
-                animator.SetBool("Hammer", true);
+				Hoe();
             }
             else
             {
@@ -193,6 +204,46 @@ namespace Completed
             }
 		}
 		
+
+
+
+		void Hammer()
+		{
+			if(hammer_pts > 0)
+			{
+				LoseStamina(1);
+				//Debug.Log(hold);
+				Debug.Log("Hammer");
+				Instantiate(hammer, new Vector3(hitbox.transform.position.x + up, hitbox.transform.position.y + down, 0), Quaternion.identity);
+				hammer_pts--;
+				HammerText.text = ": " + hammer_pts;
+				animator.SetBool("Hammer", true);
+			}
+			else 
+			{
+				DisplayText(msg_fbp);
+			}
+		}
+
+		void Hoe()
+		{
+			if(hoe_pts>0)
+			{
+				LoseStamina(1);
+				Debug.Log("Hoe");
+				Instantiate(hoe, new Vector3(hitbox.transform.position.x + up, hitbox.transform.position.y + down, 0), Quaternion.identity);
+				hoe_pts--;
+				HoeText.text = ": " + hoe_pts;
+				animator.SetBool("Hammer", true);
+			}
+			else
+			{
+				DisplayText(msg_fbp);
+			}
+		}
+
+
+
         void Move(int up, int right)
         {
            
@@ -201,8 +252,33 @@ namespace Completed
             transform.GetChild(0).rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
+
+
+
+		void DisplayText(Transform msg_pf)
+		{
+			Transform clone;
+			clone = Instantiate(msg_pf, new Vector3(transform.position.x, transform.position.y + 1f, -5), Quaternion.identity)as Transform;
+			clone.parent = transform;
+		}
+
+
+
 		void Put_in()
         {
+			if(backpack.Count<size)
+			{
+				backpack.Add(item.gameObject);
+				Destroy(item.gameObject);
+				BackpackText.text = ": " + backpack.Count + "/" + size; 
+			}
+
+			else
+			{
+				DisplayText(msg_fbp);
+			}
+
+			//Function to put object in bag
 
         }
 		
@@ -273,7 +349,7 @@ namespace Completed
 			Stamina -= loss;
 			
 			//Update the Stamina display with the new total.
-			StaminaText.text = "-"+ loss + " Stamina: " + Stamina;
+			StaminaText.text = ": " + Stamina;
 			
 			//Check to see if game has ended.
 			CheckIfGameOver ();
@@ -285,7 +361,7 @@ namespace Completed
 
 
             //Create stuffs on top of the head
-             item = Instantiate(stuff, new Vector3(transform.position.x, transform.position.y + 1, 0), Quaternion.identity) as Transform;
+             item = Instantiate(stuff, new Vector3(transform.position.x, transform.position.y + 0.9f, -5), Quaternion.identity) as Transform;
             //Choose to keep it or throw it
             item.parent = transform;
             hold = true;
