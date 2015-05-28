@@ -1,0 +1,14 @@
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\UnityEditor.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\UnityEngine.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\UnityEngine.UI.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\Mono.Cecil.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\Unity.SerializationLogic.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\Unity.DataContract.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\Temp\bin\Debug\Unity.CecilTools.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\obj\Debug\Assembly-CSharp.dll
+C:\Users\vietanh1441\Documents\GitHub\Test\Testgame\obj\Debug\Assembly-CSharp.pdb
