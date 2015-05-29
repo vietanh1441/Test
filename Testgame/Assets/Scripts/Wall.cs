@@ -57,7 +57,7 @@ using System.Collections;
 				//Disable the gameObject.
 				gameObject.SetActive (false);
                 //Send to player the prefab
-                player.SendMessage("PickUp", prefab[i]);
+                player.SendMessage("PickUp", i);
                 
                 }
 		}

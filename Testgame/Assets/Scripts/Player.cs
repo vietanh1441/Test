@@ -13,7 +13,9 @@ using System.Collections.Generic;
         public Transform hammer;
         public Transform hoe;
         public GameObject hitbox;
-        private Transform item;
+        public  GameObject item;
+        public int item_id;
+        public Transform[] prefab = new Transform[5];
 		public float restartLevelDelay = 1f;		//Delay time in seconds to restart level.
 		public int pointsPerStamina = 10;				//Number of points to add to player Stamina points when picking up a Stamina object.
 		public int pointsPerSoda = 20;				//Number of points to add to player Stamina points when picking up a soda object.
@@ -43,7 +45,7 @@ using System.Collections.Generic;
         private Rigidbody2D rb2D;				//The Rigidbody2D component attached to this object.
         private float inverseMoveTime;			//Used to make movement more efficient.
         private int size;
-        private List<GameObject> backpack;
+        public  List<int> backpack;
 		private int stamina_pts;
 		private int hammer_pts;
 		private int hoe_pts;
@@ -284,8 +286,8 @@ using System.Collections.Generic;
         {
 			if(backpack.Count<size)
 			{
-				backpack.Add(item.gameObject);
-				Destroy(item.gameObject);
+				backpack.Add(item_id);
+				Destroy(item);
 				BackpackText.text = ": " + backpack.Count + "/" + size; 
 			}
 
@@ -359,14 +361,14 @@ using System.Collections.Generic;
 		}
 		
 		
-        void PickUp(Transform stuff)
+        void PickUp(int id)
         {
 
-
+            Transform stuff = prefab[id];
+            item_id = id;
             //Create stuffs on top of the head
-             item = Instantiate(stuff, new Vector3(transform.position.x, transform.position.y + 0.9f, -5), Quaternion.identity) as Transform;
+              item = Instantiate(stuff, new Vector3(transform.position.x, transform.position.y + 0.9f, -5), Quaternion.identity) as GameObject;
             //Choose to keep it or throw it
-            item.parent = transform;
             hold = true;
             Debug.Log(hold);
             //

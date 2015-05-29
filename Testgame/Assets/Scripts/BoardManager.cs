@@ -86,7 +86,7 @@ using Random = UnityEngine.Random; 		//Tells Random to use the Unity Engine rand
                 grid.worth = true;
             }
             
-            grid = floors[Random.Range(0, floors.Length + 1)].GetComponent<Grid>();
+            grid = floors[Random.Range(0, floors.Length )].GetComponent<Grid>();
             if(grid.worth == true)
             {
                 grid = floors[Random.Range(0, floors.Length + 1)].GetComponent<Grid>();

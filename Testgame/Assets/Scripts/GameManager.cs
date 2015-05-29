@@ -14,13 +14,13 @@ using System.Collections;
 		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
 		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
         public int size;
-        public List<GameObject> backpack = new List<GameObject>();
+        public List<int> backpack = new List<int>();
 		public int stamina;
 		public int hammer = 10;
 		public int hoe = 10;
         public int days = 0;
         public int max_hp, max_hammer, max_hoe;                     //pre-determine, will be reset each days. Also subject to be saved
-        public List<GameObject> inventory = new List<GameObject>(); //The main inventory, the backpack will be added to inventory everytime the character exit.
+        public List<int> inventory = new List<int>(); //The main inventory, the backpack will be added to inventory everytime the character exit.
 
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
@@ -29,12 +29,25 @@ using System.Collections;
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 		private bool enemiesMoving;								//Boolean to check if enemies are moving.
 		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
-		
-		
+
+        public class Inventory
+        {
+            int bronze;
+            int silver;
+            int gold;
+
+            public Inventory()
+            {
+                bronze = 0;
+                silver = 0;
+                gold = 0;
+            }
+        }
 		
 		//Awake is always called before any Start functions
 		void Awake()
 		{
+            size = 10;
             max_hp = 20;
             max_hammer = 10;
             max_hoe = 40;
@@ -78,7 +91,9 @@ using System.Collections;
             }
             if(Application.loadedLevel == 0)
             {
+                //Reset hp and add item from backpack to inventory as well as reset backpack
                 ResetHp();
+
             }
 		}
 		
