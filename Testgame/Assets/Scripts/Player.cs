@@ -58,10 +58,11 @@ using System.Collections.Generic;
             hitbox = GameObject.Find("Hitbox");
 			//Get the current Stamina point total stored in GameManager.instance between levels.
 			Stamina = GameManager.instance.playerStaminaPoints;
+            Debug.Log(Stamina);
             Health = GameManager.instance.PlayerHealth;
             size = GameManager.instance.size;
             backpack = GameManager.instance.backpack;
-			stamina_pts = GameManager.instance.stamina;
+			//stamina_pts = GameManager.instance.stamina;
 			hammer_pts = GameManager.instance.hammer;
 			hoe_pts = GameManager.instance.hoe;
 
@@ -100,7 +101,6 @@ using System.Collections.Generic;
             transform.Translate(0,-0.024f*Time.deltaTime,0);
             animator.SetBool("Hammer", false);
 			//If it's not the player's turn, exit the function.
-			if(!GameManager.instance.playersTurn) return;
 
             int horizontal = 0;  	//Used to store the horizontal move direction.
             int vertical = 0;		//Used to store the vertical move direction.
@@ -353,7 +353,7 @@ using System.Collections.Generic;
 			
 			//Update the Stamina display with the new total.
 			StaminaText.text = ": " + Stamina;
-			
+            Debug.Log("What?");
 			//Check to see if game has ended.
 			CheckIfGameOver ();
 		}
@@ -376,9 +376,11 @@ using System.Collections.Generic;
 		//CheckIfGameOver checks if the player is out of Stamina points and if so, ends the game.
 		private void CheckIfGameOver ()
 		{
+            Debug.Log("CHecking");
 			//Check if Stamina point total is less than or equal to zero.
-			/*if (Stamina <= 0) 
+			if (Stamina <= 0) 
 			{
+                Debug.Log("WHY NOT?");
 				//Call the PlaySingle function of SoundManager and pass it the gameOverSound as the audio clip to play.
 				SoundManager.instance.PlaySingle (gameOverSound);
 				
@@ -387,7 +389,7 @@ using System.Collections.Generic;
 				
 				//Call the GameOver function of GameManager.
 				GameManager.instance.GameOver ();
-			}*/
+			}
 		}
 
         //Grid will call this function when Player dig a bomb
@@ -402,6 +404,7 @@ using System.Collections.Generic;
 
             //Update the Stamina display with the new total.
             StaminaText.text = ": " + Stamina;
+            CheckIfGameOver();
         }
 
         //

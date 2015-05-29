@@ -18,7 +18,10 @@ using System.Collections;
 		public int stamina;
 		public int hammer = 10;
 		public int hoe = 10;
-		
+        public int days = 0;
+        public int max_hp, max_hammer, max_hoe;                     //pre-determine, will be reset each days. Also subject to be saved
+        public List<GameObject> inventory = new List<GameObject>(); //The main inventory, the backpack will be added to inventory everytime the character exit.
+
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
@@ -32,6 +35,11 @@ using System.Collections;
 		//Awake is always called before any Start functions
 		void Awake()
 		{
+            max_hp = 20;
+            max_hammer = 10;
+            max_hoe = 40;
+            days = 0;
+            print(Application.loadedLevel);
 			//Check if instance already exists
 			if (instance == null)
 				
@@ -60,11 +68,18 @@ using System.Collections;
 		//This is called each time a scene is loaded.
 		void OnLevelWasLoaded(int index)
 		{
-            Debug.Log("UP");
-			//Add one to our level number.
-			level++;
-			//Call InitGame to initialize our level.
-			InitGame();
+            if (Application.loadedLevel == 1)
+            {
+                Debug.Log("UP");
+                //Add one to our level number.
+                level++;
+                //Call InitGame to initialize our level.
+                InitGame();
+            }
+            if(Application.loadedLevel == 0)
+            {
+                ResetHp();
+            }
 		}
 		
 		//Initializes the game for each level.
@@ -110,14 +125,7 @@ using System.Collections;
 		//Update is called every frame.
 		void Update()
 		{
-			//Check that playersTurn or enemiesMoving or doingSetup are not currently true.
-			if(playersTurn || enemiesMoving || doingSetup)
-				
-				//If any of these are true, return and do not start MoveEnemies.
-				return;
 			
-			//Start moving enemies.
-			StartCoroutine (MoveEnemies ());
 		}
 		
 		//Call this to add the passed in Enemy to the List of Enemy objects.
@@ -132,45 +140,20 @@ using System.Collections;
 		public void GameOver()
 		{
 			//Set levelText to display number of levels passed and game over message
-			levelText.text = "After " + level + " days, you starved.";
+			levelText.text = "Random Shit";
 			
 			//Enable black background image gameObject.
 			levelImage.SetActive(true);
-			
-			//Disable this GameManager.
-			enabled = false;
+			//Reset everything
+            //Invoke("ResetHp",2);
+            level = 0;
+			//Load level
+            Application.LoadLevel(0);
 		}
 		
-		//Coroutine to move enemies in sequence.
-		IEnumerator MoveEnemies()
-		{
-			//While enemiesMoving is true player is unable to move.
-			enemiesMoving = true;
-			
-			//Wait for turnDelay seconds, defaults to .1 (100 ms).
-			yield return new WaitForSeconds(turnDelay);
-			
-			//If there are no enemies spawned (IE in first level):
-			if (enemies.Count == 0) 
-			{
-				//Wait for turnDelay seconds between moves, replaces delay caused by enemies moving when there are none.
-				yield return new WaitForSeconds(turnDelay);
-			}
-			
-			//Loop through List of Enemy objects.
-			for (int i = 0; i < enemies.Count; i++)
-			{
-				//Call the MoveEnemy function of Enemy at index i in the enemies List.
-				enemies[i].MoveEnemy ();
-				
-				//Wait for Enemy's moveTime before moving next Enemy, 
-				yield return new WaitForSeconds(enemies[i].moveTime);
-			}
-			//Once Enemies are done moving, set playersTurn to true so player can move.
-			playersTurn = true;
-			
-			//Enemies are done moving, set enemiesMoving to false.
-			enemiesMoving = false;
-		}
+        public void ResetHp()
+        {
+            playerStaminaPoints = max_hp;
+        }
 	}
 

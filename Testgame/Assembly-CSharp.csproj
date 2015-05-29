@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\Wall.cs" />
      <Compile Include="Assets\Scripts\messages.cs" />
      <Compile Include="Assets\ToMine.cs" />
+     <Compile Include="Assets\central.cs" />
      <Compile Include="Assets\t_pos.cs" />
      <None Include="Assets\Fonts\OFL.txt" />
  <Reference Include="UnityEngine.UI">
