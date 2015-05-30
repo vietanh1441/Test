@@ -399,6 +399,7 @@ using System.Collections.Generic;
             //Create stuffs on top of the head
             Transform it = Instantiate(stuff, new Vector3(transform.position.x, transform.position.y + 0.9f, -5), Quaternion.identity) as Transform;
               it.parent = transform;
+              item = it.gameObject;
             //Choose to keep it or throw it
             hold = true;
             Debug.Log(hold);

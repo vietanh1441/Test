@@ -7,12 +7,36 @@ using System.Collections;
 	
 	public class GameManager : MonoBehaviour
 	{
+
+        public class Inventory
+        {
+            public int[] item_id = new int[3];
+
+            public Inventory()
+            {
+                for (int i = 0; i < item_id.Length; i++)
+                {
+                    item_id[i] = 0;
+                }
+            }
+
+            public void Add(int id)
+            {
+                item_id[id]++;
+            }
+
+            public void Remove(int id)
+            {
+                item_id[id]--;
+            }
+        }
+
         private Vector3 MINE_FRONT = new Vector3 (-2,-2,-1);
         private Vector3 BED = new Vector3(-10, -10,-1);
         public Vector3 pawnpoint = new Vector3(-2,-2,-1);   
 
         public GameObject player;
-
+        public Inventory inventory = new Inventory();
         bool die = false;
 		public float levelStartDelay = 2f;						//Time to wait before starting level, in seconds.
 		public float turnDelay = 0.1f;							//Delay between each Player turn.
@@ -27,7 +51,7 @@ using System.Collections;
 		public int hoe = 10;
         public int days = 0;
         public int max_hp, max_hammer, max_hoe;                     //pre-determine, will be reset each days. Also subject to be saved
-        public List<int> inventory = new List<int>(); //The main inventory, the backpack will be added to inventory everytime the character exit.
+        //public GameObject[] inventory = new GameObject[]; //The main inventory, the backpack will be added to inventory everytime the character exit.
 
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
@@ -37,19 +61,7 @@ using System.Collections;
 		private bool enemiesMoving;								//Boolean to check if enemies are moving.
 		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
 
-        public class Inventory
-        {
-            int bronze;
-            int silver;
-            int gold;
-
-            public Inventory()
-            {
-                bronze = 0;
-                silver = 0;
-                gold = 0;
-            }
-        }
+        
 		
 		//Awake is always called before any Start functions
 		void Awake()
@@ -146,7 +158,13 @@ using System.Collections;
         {
             //When exit
             //Add item from backpack to inventory
+            for(int i = 0; i < backpack.Count; i++)
+            {
+                inventory.Add(backpack[i]);
+                Debug.Log(inventory.item_id[0]);
+                Debug.Log(inventory.item_id[1]);
 
+            }
             //set backpack to 0
         }
 
