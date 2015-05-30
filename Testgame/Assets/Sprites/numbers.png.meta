@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7abccf221d233ff4a86686612570761f
-timeCreated: 1432636677
+timeCreated: 1432963551
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -44,6 +44,12 @@ TextureImporter:
     21300074: numbers_37
     21300076: numbers_38
     21300078: numbers_39
+    21300080: numbers_40
+    21300082: numbers_41
+    21300084: numbers_42
+    21300086: numbers_43
+    21300088: numbers_44
+    21300090: numbers_45
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -484,6 +490,66 @@ TextureImporter:
         serializedVersion: 2
         x: 128
         y: 224
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: numbers_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: numbers_41
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: numbers_42
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: numbers_43
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: numbers_44
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: numbers_45
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
         width: 32
         height: 32
       alignment: 0

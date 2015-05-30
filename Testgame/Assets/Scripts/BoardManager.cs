@@ -40,6 +40,7 @@ using Random = UnityEngine.Random; 		//Tells Random to use the Unity Engine rand
         public GameObject[] enemyTiles;                                 //Array of enemy prefabs.
         public GameObject[] exitTiles;                                  //Array of Exit tile prefabs
 		public GameObject[] outerWallTiles;								//Array of outer tile prefabs.
+        public GameObject step;
         public GameObject[] floors;
 
 		private Transform boardHolder;									//A variable to store a reference to the transform of our Board object.
@@ -62,7 +63,7 @@ using Random = UnityEngine.Random; 		//Tells Random to use the Unity Engine rand
 				//Within each column, loop through y axis (rows).
 				for(int y = 0; y < rows; y++)
 				{
-                    if(x!=0 && y != 0)
+                    if(x!=0 || y != 0)
 					//At each index add a new Vector3 to our list with the x and y coordinates of that position.
 					gridPositions.Add (new Vector3(x, y, 0f));
 				}
@@ -112,15 +113,17 @@ using Random = UnityEngine.Random; 		//Tells Random to use the Unity Engine rand
 					//Check if we current position is at board edge, if so choose a random outer wall prefab from our array of outer wall tiles.
 					if(x == -1 || x == columns || y == -1 || y == rows)
 						toInstantiate = outerWallTiles [Random.Range (0, outerWallTiles.Length)];
-					
+                    if (x == 0 && y == -1)
+                        toInstantiate = floorTiles[0];
 					//Instantiate the GameObject instance using the prefab chosen for toInstantiate at the Vector3 corresponding to current grid position in loop, cast it to GameObject.
-					GameObject instance =
+					GameObject instance = 
 						Instantiate (toInstantiate, new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
 					
 					//Set the parent of our newly instantiated object instance to boardHolder, this is just organizational to avoid cluttering hierarchy.
 					instance.transform.SetParent (boardHolder);
 				}
 			}
+            Instantiate(step, new Vector3(0, -2, 0f), Quaternion.identity);
 		}
 		
 		

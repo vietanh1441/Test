@@ -50,10 +50,12 @@ using System.Collections.Generic;
 		private int hammer_pts;
 		private int hoe_pts;
 		private bool exit = false;
+        private bool exit_m = false;
 		
 		//Start overrides the Start function of MovingObject
 		 void Start ()
 		{
+
             hold = false;
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
@@ -143,6 +145,22 @@ using System.Collections.Generic;
 					exit = false;
 				}
 			}
+            else if (exit_m)
+            {
+                if (Input.GetButtonDown("yes"))
+                {
+
+                    Do_exit(1);
+
+                    exit_m = false;
+                }
+                else if (Input.GetButtonDown("no"))
+                {
+                    Do_not_exit();
+
+                    exit_m = false;
+                }
+            }
             else if (Input.GetButtonDown("Hammer") && !hold)
             {
 				Hammer();
@@ -316,15 +334,27 @@ using System.Collections.Generic;
 				//Disable the player object since level is over.
 				
 			}
+            else if(other.tag == "Mine_exit")
+            {
+                exit_m = true;
+            }
 			
 		}
 
-		void Do_exit()
+		void Do_exit(int i = 0)
 		{
 			enabled = false;
-			Destroy (GameObject.FindWithTag("Exit"));
-			//Invoke the Restart function to start the next level with a delay of restartLevelDelay (default 1 second).
-			Invoke ("Restart", 0);
+            if (i == 0)
+            {
+                Destroy(GameObject.FindWithTag("Exit"));
+                //Invoke the Restart function to start the next level with a delay of restartLevelDelay (default 1 second).
+                Invoke("Restart", 0);
+            }
+            else
+            {
+                Destroy(GameObject.FindGameObjectWithTag("Mine_exit"));
+                GameManager.instance.Exit_Mine();
+            }
 		}
 
 
@@ -367,7 +397,8 @@ using System.Collections.Generic;
             Transform stuff = prefab[id];
             item_id = id;
             //Create stuffs on top of the head
-              item = Instantiate(stuff, new Vector3(transform.position.x, transform.position.y + 0.9f, -5), Quaternion.identity) as GameObject;
+            Transform it = Instantiate(stuff, new Vector3(transform.position.x, transform.position.y + 0.9f, -5), Quaternion.identity) as Transform;
+              it.parent = transform;
             //Choose to keep it or throw it
             hold = true;
             Debug.Log(hold);
@@ -378,11 +409,9 @@ using System.Collections.Generic;
 		//CheckIfGameOver checks if the player is out of Stamina points and if so, ends the game.
 		private void CheckIfGameOver ()
 		{
-            Debug.Log("CHecking");
 			//Check if Stamina point total is less than or equal to zero.
 			if (Stamina <= 0) 
 			{
-                Debug.Log("WHY NOT?");
 				//Call the PlaySingle function of SoundManager and pass it the gameOverSound as the audio clip to play.
 				SoundManager.instance.PlaySingle (gameOverSound);
 				

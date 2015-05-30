@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
+ 
 	using System.Collections.Generic;		//Allows us to use Lists. 
 	using UnityEngine.UI;					//Allows us to use UI.
 	
 	public class GameManager : MonoBehaviour
 	{
+        private Vector3 MINE_FRONT = new Vector3 (-2,-2,-1);
+        private Vector3 BED = new Vector3(-10, -10,-1);
+        public Vector3 pawnpoint = new Vector3(-2,-2,-1);   
+
+        public GameObject player;
+
+        bool die = false;
 		public float levelStartDelay = 2f;						//Time to wait before starting level, in seconds.
 		public float turnDelay = 0.1f;							//Delay between each Player turn.
 		public int playerStaminaPoints = 20;					//Starting value for Player food points.
@@ -47,18 +54,29 @@ using System.Collections;
 		//Awake is always called before any Start functions
 		void Awake()
 		{
+            if(Application.loadedLevel == 2)
+            {
+                Application.LoadLevel(0);
+            }
+           // player = Instantiate(player,pawnpoint, Quaternion.identity)as GameObject;
+            Debug.Log("PAWNPOINT" + pawnpoint.x + pawnpoint.y);
+            Debug.Log("RESTART");
+            MINE_FRONT = new Vector2(-1, -1);
+            BED = new Vector2(-10, -10);
             size = 10;
             max_hp = 20;
             max_hammer = 10;
             max_hoe = 40;
             days = 0;
-            print(Application.loadedLevel);
+            Reset_Tools();
 			//Check if instance already exists
 			if (instance == null)
 				
 				//if not, set instance to this
 				instance = this;
 			
+                //Load save file
+
 			//If instance already exists and it's not this:
 			else if (instance != this)
 				
@@ -81,8 +99,14 @@ using System.Collections;
 		//This is called each time a scene is loaded.
 		void OnLevelWasLoaded(int index)
 		{
+            
+            Debug.Log("PAWNPOINT" + pawnpoint.x + pawnpoint.y);
+            Debug.Log("RESTARTwithloaded");
+           // player = GameObject.FindGameObjectWithTag("Player");
+            //Reset_Tools();
             if (Application.loadedLevel == 1)
             {
+
                 Debug.Log("UP");
                 //Add one to our level number.
                 level++;
@@ -91,15 +115,51 @@ using System.Collections;
             }
             if(Application.loadedLevel == 0)
             {
+                Instantiate(player, pawnpoint, Quaternion.identity);
+                //First check the coordinate of the pawn point
+                //Then pawn the player at according coordinate
+                //Instantiate(player, MINE_FRONT, Quaternion.identity);
+                //Then based on whether player die or what, reset accordingly
+                if(die)
+                {
+                    Reset_when_die();
+                }
                 //Reset hp and add item from backpack to inventory as well as reset backpack
-                ResetHp();
+                else
+                {
+                    Reset_when_exit();
+                }
 
             }
 		}
 		
+
+        void Reset_when_die()
+        {
+            //When die
+            //Reset hp, set backpack to 0
+            ResetHp();
+            backpack.Clear();
+        }
+
+        void Reset_when_exit()
+        {
+            //When exit
+            //Add item from backpack to inventory
+
+            //set backpack to 0
+        }
+
+        void Reset_Tools()
+        {
+            hammer = max_hammer;
+            hoe = max_hoe;
+        }
+
 		//Initializes the game for each level.
 		void InitGame()
 		{
+            die = false;
 			//While doingSetup is true the player can't move, prevent player from moving while title card is up.
 			doingSetup = true;
 			
@@ -154,6 +214,9 @@ using System.Collections;
 		//GameOver is called when the player reaches 0 food points
 		public void GameOver()
 		{
+            //Set pawnpoint to the bed
+            pawnpoint = BED;
+            Debug.Log(pawnpoint.x + pawnpoint.y);
 			//Set levelText to display number of levels passed and game over message
 			levelText.text = "Random Shit";
 			
@@ -162,10 +225,23 @@ using System.Collections;
 			//Reset everything
             //Invoke("ResetHp",2);
             level = 0;
+            die = true;
 			//Load level
             Application.LoadLevel(0);
 		}
 		
+        //When player exit the min instead of dying
+        public void Exit_Mine()
+        {
+            //Set pawnpoint to in front of the mine
+            pawnpoint = MINE_FRONT;
+
+            level = 0;
+            Application.LoadLevel(0);
+            //call reset_when_exit
+        }
+
+
         public void ResetHp()
         {
             playerStaminaPoints = max_hp;
