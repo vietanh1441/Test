@@ -10,7 +10,7 @@ using System.Collections;
 
         public class Inventory
         {
-            public int[] item_id = new int[3];
+            public int[] item_id = new int[30];
 
             public Inventory()
             {
@@ -30,6 +30,8 @@ using System.Collections;
                 item_id[id]--;
             }
         }
+
+        public int money;
 
         private Vector3 MINE_FRONT = new Vector3 (-2,-2,-1);
         private Vector3 BED = new Vector3(-10, -10,-1);
@@ -70,6 +72,7 @@ using System.Collections;
             {
                 Application.LoadLevel(0);
             }
+            money = 0;
            // player = Instantiate(player,pawnpoint, Quaternion.identity)as GameObject;
             Debug.Log("PAWNPOINT" + pawnpoint.x + pawnpoint.y);
             Debug.Log("RESTART");
@@ -166,6 +169,7 @@ using System.Collections;
 
             }
             //set backpack to 0
+            backpack.Clear();
         }
 
         void Reset_Tools()
@@ -263,6 +267,16 @@ using System.Collections;
         public void ResetHp()
         {
             playerStaminaPoints = max_hp;
+        }
+
+        void AddMoney(int num)
+        {
+            money = money + num;
+        }
+
+        void LoseMoney(int num)
+        {
+            money = money - num;
         }
 	}
 

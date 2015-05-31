@@ -63,6 +63,7 @@
      <Compile Include="Assets\ToMine.cs" />
      <Compile Include="Assets\central.cs" />
      <Compile Include="Assets\exit_mine.cs" />
+     <Compile Include="Assets\inventory_text.cs" />
      <Compile Include="Assets\t_pos.cs" />
      <None Include="Assets\Fonts\OFL.txt" />
  <Reference Include="UnityEngine.UI">
