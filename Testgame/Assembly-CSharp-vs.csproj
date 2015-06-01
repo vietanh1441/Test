@@ -46,8 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\City_Player.cs" />
+     <Compile Include="Assets\Screen.cs" />
      <Compile Include="Assets\Scripts\BoardManager.cs" />
+     <Compile Include="Assets\Scripts\City_Player.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\Floor.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -58,13 +59,13 @@
      <Compile Include="Assets\Scripts\MovingObject.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\ToMine.cs" />
      <Compile Include="Assets\Scripts\Wall.cs" />
+     <Compile Include="Assets\Scripts\central.cs" />
+     <Compile Include="Assets\Scripts\exit_mine.cs" />
+     <Compile Include="Assets\Scripts\inventory_text.cs" />
      <Compile Include="Assets\Scripts\messages.cs" />
-     <Compile Include="Assets\ToMine.cs" />
-     <Compile Include="Assets\central.cs" />
-     <Compile Include="Assets\exit_mine.cs" />
-     <Compile Include="Assets\inventory_text.cs" />
-     <Compile Include="Assets\t_pos.cs" />
+     <Compile Include="Assets\Scripts\t_pos.cs" />
      <None Include="Assets\Fonts\OFL.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

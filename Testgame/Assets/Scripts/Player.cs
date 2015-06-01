@@ -7,7 +7,6 @@ using System.Collections.Generic;
 	//Player inherits from MovingObject, our base class for objects that can move, Enemy also inherits from this.
 	public class Player : MonoBehaviour
 	{
-
         public LayerMask blockingLayer;
 		public Transform msg_fbp;
         public Transform hammer;
@@ -55,7 +54,6 @@ using System.Collections.Generic;
 		//Start overrides the Start function of MovingObject
 		 void Start ()
 		{
-
             hold = false;
 			//Get a component reference to the Player's animator component
 			animator = GetComponent<Animator>();
